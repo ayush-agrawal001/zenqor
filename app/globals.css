@@ -6,6 +6,8 @@ body {
   overflow-x: hidden;
 }
 
+
+
 * {
   scrollbar-width: thin;
   scrollbar-color: #333 #0D0B10; /* thumb and track */

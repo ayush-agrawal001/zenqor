@@ -14,12 +14,13 @@ const inter = Inter({ subsets: ["latin"] })
 
 export default function Solutions() {
   const ref = useRef(null)
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["0 1", "1.4 1"],
-  })
+  const {scrollYProgress} = useScroll({
+    target : ref,
+    offset : ["0.4 1", "1.33 1"]
+  });
 
-  const scaleProgress = useTransform(scrollYProgress, [0, 1], [0.6, 1])
+  const scaleProggress = useTransform(scrollYProgress, [0, 1], [0.4, 1])
+  const scaleProggressOpacity = useTransform(scrollYProgress, [0, 1], [0, 1])
 
   return (
     <div className="min-h-screen">
@@ -40,8 +41,8 @@ export default function Solutions() {
 
         <motion.div
           style={{
-            scale: scaleProgress,
-            opacity: scaleProgress,
+            scale: scaleProggress,
+            opacity: scaleProggressOpacity,
           }}
           className="w-full flex justify-center items-center"
           ref={ref}
@@ -62,7 +63,7 @@ export default function Solutions() {
           <CardSolutions />
         </motion.div>
 
-        <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] py-12 sm:py-16 md:py-20 bg-slate-800 mt-16 sm:mt-20 md:mt-24 lg:mt-[180px] relative flex flex-col justify-center items-center rounded-lg">
+        <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] py-12 sm:py-16 md:py-20 bg-slate-800 -mt-72 sm:-mt-20 md:-mt-24 lg:-mt-72 relative flex flex-col justify-center items-center rounded-lg">
           <div className="px-4 sm:px-6 md:px-8 text-center">
             <h2 className="font-medium text-2xl sm:text-3xl md:text-[34px] mb-4">Shape the Future with Us</h2>
             <div className="flex flex-col w-full justify-center items-center gap-6 sm:gap-8 md:gap-[48px]">

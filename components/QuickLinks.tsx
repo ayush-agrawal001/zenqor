@@ -35,7 +35,7 @@ const QuickLinks: React.FC = () => {
               <div key={index} className="flex text-[14px] relative flex-col justify-center whitespace-nowrap min-h-[24px] mt-4 first:mt-0"> 
                 <div className="flex-col">
             <Link 
-            href="/" 
+            href={item.href}
             className={` text-white/50 hover:text-white transition-all ease-in-out duration-300 `}
             onMouseEnter={() => setWhichHovered({nav: item.text})}
             onMouseLeave={() => setWhichHovered({nav: "none"})}

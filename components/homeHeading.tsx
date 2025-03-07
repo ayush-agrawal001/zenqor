@@ -4,39 +4,70 @@ import Link from "next/link"
 import { WarpBackground } from "./warp-background"
 import ButtonZen from "./style/buttonZen"
 import HeadingAndDesc from "./style/headingAndDesc"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useMotionValueEvent, useScroll } from "framer-motion"
-import HomeSecondHeading, { useMediaQuery } from "./homeSecondHeading"
+import HomeSecondHeading from "./homeSecondHeading"
 
 export default function HomeHeading() {
-
   const [isInViewSec, setIsInViewSec] = useState(false);
-
+  const [isMobile, setIsMobile] = useState(false);
+  
   const screenScroll = useScroll();
-  const isTabletAndLaptop = useMediaQuery('(min-width: 768px)');
 
-  useMotionValueEvent(screenScroll.scrollYProgress, "change", (latest) => {
-    if(isTabletAndLaptop) {
-      setIsInViewSec(latest > 0.15);
-    }else{
-      setIsInViewSec(latest > 0.15);
+  // Check if device is mobile on component mount and window resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640); // 640px is the typical sm breakpoint
     };
-  })
+    
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  // Only track scroll progress for non-mobile devices
+  useMotionValueEvent(screenScroll.scrollYProgress, "change", (latest) => {
+    if (!isMobile) {
+      setIsInViewSec(latest > 0.15);
+    }
+  });
 
   return (
     <>
-      {!isInViewSec &&<WarpBackground>
-         <HeadingAndDesc
-          heading={<Heading />}
-          subHeading={<SubHeading />}
-          desc={<Desc />}
-          ctaButton={<CtaButton />}
-          className=""
-        />
-      </WarpBackground>}
-      <div className="relative flex items-end sm:items-center justify-center h-[200vh] md:h-[250vh]  md:min-h-[200vh] w-full "> 
-        {isInViewSec && <HomeSecondHeading />}
-      </div>
+      {isMobile ? (
+        // Static layout for mobile
+        <div className="min-h-screen">
+          <WarpBackground>
+            <HeadingAndDesc
+              heading={<Heading />}
+              subHeading={<SubHeading />}
+              desc={<Desc />}
+              ctaButton={<CtaButton />}
+              className=""
+            />
+          </WarpBackground>
+          <div className="mt-16">
+            <HomeSecondHeading />
+          </div>
+        </div>
+      ) : (
+        // Original animated layout for tablets and laptops
+        <>
+          {!isInViewSec && <WarpBackground>
+            <HeadingAndDesc
+              heading={<Heading />}
+              subHeading={<SubHeading />}
+              desc={<Desc />}
+              ctaButton={<CtaButton />}
+              className=""
+            />
+          </WarpBackground>}
+          <div className="relative flex items-end sm:items-center justify-center h-[200vh] md:h-[250vh] md:min-h-[200vh] w-full"> 
+            {isInViewSec && <HomeSecondHeading />}
+          </div>
+        </>
+      )}
     </>
   )
 }
@@ -72,4 +103,3 @@ const CtaButton = () => (
     </ButtonZen>
   </div>
 )
-

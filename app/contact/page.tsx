@@ -1,11 +1,15 @@
+import ContactForm from "@/components/contact-form";
 import HeadingAndDesc from "@/components/style/headingAndDesc";
 
 const Contact = () => {
   return (
     <div>
-        <div className="flex flex-col items-center w-full mt-24 sm:mt-24 md:mt-32 lg:mt-[256px]">
+        <div className="flex flex-col items-center h-[300vh] gap-[120px] w-full mt-24 sm:mt-24 md:mt-32 lg:mt-[256px]">
             <div className="w-full flex flex-col relative px-4 sm:px-6 md:px-8">
                 <HeadingAndDesc heading={<Heading />} desc={<Desc />} className="relative z-10" />                
+            </div>
+            <div className="w-[60vw]">
+              <ContactForm></ContactForm>
             </div>
         </div>
     </div>

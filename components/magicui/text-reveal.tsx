@@ -1,113 +1,123 @@
-"use client"
+"use client";
 
-import { motion, type MotionValue, useScroll, useTransform } from "motion/react"
-import {
-  Children,
-  type ComponentPropsWithoutRef,
-  type FC,
-  type ReactNode,
-  useEffect,
-  useRef,
-  isValidElement,
-  RefObject,
-} from "react"
-import { Inter } from "next/font/google"
+import { motion, MotionValue, useScroll, useTransform } from "motion/react";
+import React, { ComponentPropsWithoutRef, FC, ReactNode, useEffect, useRef, useState } from "react";
 
-const inter = Inter({ subsets: ["latin"] })
+import { cn } from "@/lib/utils";
+import { Inter } from "next/font/google";
+
+const inter = Inter({ subsets: ["latin"] });
 
 export interface TextRevealProps extends ComponentPropsWithoutRef<"div"> {
-  children: ReactNode
-  heightOfScroll: string,
-  targetRef: RefObject<HTMLDivElement>
+  children: ReactNode;
+  headForMobile?: string;
+  isHeadHis?: boolean;
 }
 
-export const TextReveal: FC<TextRevealProps> = ({ children, className, heightOfScroll, targetRef }) => {
-  // const targetRef = useRef<HTMLDivElement | null>(null)
-  const childrenRef = useRef<HTMLDivElement | null>(null)
-  
+export const TextReveal: FC<TextRevealProps> = ({ children, className, isHeadHis, headForMobile }) => {
+  const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
-    target: childrenRef,
-    offset : ["start 0.22", "end 0.69"]
-  })
-  console.log(heightOfScroll)
-  console.log(targetRef)
+    target: targetRef,
+    offset: ["start 0.3", "end 0.85"],
+  });
 
-  const processChildren = () => {
-    const items: { type: "word" | "linebreak"; content?: string }[] = []
+  const nodes = React.Children.toArray(children);
 
-    const childrenArray = Children.toArray(children)
+  const divRef = useRef<HTMLDivElement>(null);
+  const [height, setHeight] = useState(0);
 
-    childrenArray.forEach((child) => {
-      if (typeof child === "string") {
-        const words = child.split(" ").filter(Boolean)
-        words.forEach((word) => {
-          items.push({ type: "word", content: word })
-        })
-      } else if (isValidElement(child) && child.type === "br") {
-        items.push({ type: "linebreak" })
-      } else {
-        const stringContent = String(child)
-        if (stringContent.trim()) {
-          const words = stringContent.split(" ").filter(Boolean)
-          words.forEach((word) => {
-            items.push({ type: "word", content: word })
-          })
-        }
-      }
-    })
-
-    return items
-  }
-
-  const contentItems = processChildren()
-  const wordCount = contentItems.filter((item) => item.type === "word").length
+  console.log(height)
 
   useEffect(() => {
-    scrollYProgress.onChange((value) => {
-      console.log(value)
-    })
-  }, [scrollYProgress])
+    if (divRef.current) {
+      // Using getBoundingClientRect to get an accurate height
+      const measuredHeight = divRef.current.getBoundingClientRect().height;
+      setHeight(measuredHeight);
+    }
+  }, []); 
+
+  const processedNodes: ReactNode[] = [];
+  nodes.forEach((node) => {
+    if (typeof node === "string") {
+      const words = node.split(" ");
+      words.forEach((word, idx) => {
+        if (word !== "") {
+          processedNodes.push(word);
+        }
+        if (idx < words.length - 1) {
+          processedNodes.push(" ");
+        }
+      });
+    } else {
+      processedNodes.push(node);
+    }
+  });
+
+  const totalAnimatable = processedNodes.filter(
+    (node) => typeof node === "string" && node.trim() !== ""
+  ).length;
+  let animIndex = 0;
 
   return (
-      <div ref={childrenRef} className={"sticky top-40 mx-auto flex h-[65%] max-w-4xl bg-transparent font-normal" + className}>
-        <span className={"flex flex-wrap text-black/20 dark:text-white/20"}>
-          {contentItems.map((item, i) => {
-            if (item.type === "linebreak") {
-              return <div className="w-full h-5" key={i}></div> 
+    <div ref={targetRef} className={cn("relative z-0 h-[200vh] flex flex-col items-center md:block", className)}>
+      <div ref={divRef} className={`sticky ${
+        isHeadHis ? 'top-[25vh] sm:top-[28vh] md:top-[30vh]' : 'top-[15vh] sm:top-[18vh] md:top-[20vh]'
+      } mx-auto flex flex-col items-center md:items-start md:flex-row h-fit min-h-[40vh] sm:min-h-[50vh] md:h-[60vh] max-w-full bg-transparent mb-10`}>
+        <h2 
+          style={{
+              lineHeight: "1.3",
+              wordWrap: "break-word",
+          }}
+          className={`text-xl sm:text-2xl  ${
+              headForMobile === "History" || headForMobile === "Quantum Neural Networks (QNN)" 
+              ? `top-[20vh]` 
+              : `top-[15vh]`
+          } text-center font-semibold mb-6 text-white md:hidden w-full max-w-[250px]`}>
+              {headForMobile}
+      </h2>
+        
+        <span
+          className={`flex flex-wrap h-fit text-[16px] sm:text-[18px] md:text-[20px] font-normal text-black/20 dark:text-white/20 ${inter.className}`}
+        >
+          {processedNodes.map((node, i) => {
+            if (React.isValidElement(node) && node.type === "br") {
+              return <div key={i} className="h-4 w-full"></div>;
             }
-
-            // Calculate the word index (excluding linebreaks)
-            const wordIndex = contentItems.slice(0, i).filter((item) => item.type === "word").length
-
-            const start = wordIndex / wordCount
-            const end = start + 1 / wordCount
-
-            return (
-              <Word key={i} progress={scrollYProgress} range={[start, end]}>
-                {item.content}
-              </Word>
-            )
+            if (typeof node === "string") {
+              if (node.trim() === "") {
+                return node;
+              }
+              const start = animIndex / totalAnimatable;
+              const end = start + 1 / totalAnimatable;
+              animIndex++;
+              return (
+                <Word key={i} progress={scrollYProgress} range={[start, end]}>
+                  {node}
+                </Word>
+              );
+            }
+            return node;
           })}
         </span>
       </div>
-  )
-}
+    </div>
+  );
+};
 
 interface WordProps {
-  children: ReactNode
-  progress: MotionValue<number>
-  range: [number, number]
+  children: ReactNode;
+  progress: MotionValue<number>;
+  range: [number, number];
 }
 
 const Word: FC<WordProps> = ({ children, progress, range }) => {
-  const opacity = useTransform(progress, range, [0, 1])
+  const opacity = useTransform(progress, range, [0, 1]);
   return (
-    <span className={`relative mx-1 font-normal lg:mx-[2px] text-[20px] ${inter.className}`}>
+    <span className="relative mx-[2px] font-normal">
       <span className="absolute opacity-30">{children}</span>
-      <motion.span style={{ opacity: opacity }} className={"text-black dark:text-white"}>
+      <motion.span style={{ opacity }} className="text-black dark:text-white">
         {children}
       </motion.span>
     </span>
-  )
-}
-
+  );
+};
