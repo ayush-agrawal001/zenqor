@@ -1,54 +1,57 @@
 "use client"
 
 import Link from "next/link"
-import Image from "next/image"
 import ButtonZen from "./style/buttonZen"
 import HeadingAndDesc from "./style/headingAndDesc"
 import { useEffect, useRef, useState } from "react"
-import { useScroll, motion, AnimatePresence, useTransform, useSpring } from "framer-motion"
+import { useScroll, motion, AnimatePresence, useTransform, useSpring, useInView } from "framer-motion"
+import dynamic from "next/dynamic"
+import { Inter } from "next/font/google"
+
+const HomeVideo = dynamic(() => import('@/components/homeVideo'), {
+  // loading: () => <p>Loading...</p>,
+  ssr: false,
+});
+
+const inter = Inter({ subsets: ["latin"], weight: "400" })
 
 export default function HomeSecondHeading() {
   // const [isInView, setIsInView] = useState(false)
   const ref = useRef(null)
   const parentRef = useRef(null)
-  // const isInView = useInView(parentRef, { amount: 0.3})
+  const imageRef = useRef(null)
+
+  const isInViewImage = useInView(parentRef, { amount: 0.6})
+  
   const isMobile = useMediaQuery("(max-width: 768px)")
   // const isTablet = useMediaQuery("(max-width: 1024px)")
   
-  // const screenScroll = useScroll()
 
   const { scrollYProgress } = useScroll({
     target: parentRef,
     offset: ["start end", "end start"],
   })
 
-  // Adjust transform values based on screen size
-  // const getScaleValues = () => {
-  //   if (isMobile) return [1, 1.1, 1]
-  //   if (isTablet) return [1, 1.2, 1]
-  //   return [1, 1.5, 1]
-  // }
+  
 
-  // const getYValues = () => {
-  //   if (isMobile) return [0, -15, 0]
-  //   if (isTablet) return [0, -25, 0]
-  //   return [0, -50, 0]
-  // }
-
-  // const scaleRaw = useTransform(scrollYProgress, [0.4, 0.5, 0.7], getScaleValues())
-  // const yRaw = useTransform(scrollYProgress, [0.4, 0.5, 0.7], getYValues())
-  // const zRaw = useTransform(scrollYProgress, [0.4, 0.5, 0.7], [1, 1000, 1])
-  const opacityRaw = useTransform(scrollYProgress, [0.4, 0.5, 0.7], [0.5, 1, 0.5])
+  const opacityRaw = useTransform(scrollYProgress, [0.3, 0.6, 0.7], [0.5, 1, 0.5])
 
   const springConfig = {
     stiffness: isMobile ? 50 : 50,
     damping: isMobile ? 12 : 20,
   }
 
-  // const scale = useSpring(scaleRaw, springConfig)
-  // const y = useSpring(yRaw, springConfig)
-  // const z = useSpring(zRaw, springConfig)
   const opacity = useSpring(opacityRaw, springConfig)
+
+  const [showChild, setShowChild] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowChild(true);
+    }, 450);
+
+    return () => clearTimeout(timer);
+  }, []);
 
   return (
     <motion.div
@@ -81,7 +84,7 @@ export default function HomeSecondHeading() {
             </motion.div>
 
             {/* Wrapper to contain the scaled content */}
-            <div className="w-full overflow-hidden">
+            <div className="w-full ">
             <motion.div
               className="w-full flex justify-center "
               // style={{
@@ -91,25 +94,19 @@ export default function HomeSecondHeading() {
               // }}
             >
               <motion.div
-                className="w-[80vw] h-[40vh] md:h-screen relative "
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{
                   opacity: 1,
                   scale: 1,
                   transition: { duration: 1 },
                 }}
+                className="w-[80vw] h-[40vh] md:h-screen relative hover:opacity-100 "
                 exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.6 } }}
                 style={{
                   opacity: opacity,
                 }}
               >
-                <Image
-                  src="/laboratoryImg.png"
-                  className="w-full h-full object-cover opacity-75 hover:opacity-100 transition-all duration-300 aspect-[16/9]"
-                  fill
-                  priority
-                  alt="Laboratory"
-                />
+                {showChild && <HomeVideo imageRef={imageRef} isInViewImage={isInViewImage}></HomeVideo>}
               </motion.div>
             </motion.div>
             </div>
@@ -120,7 +117,7 @@ export default function HomeSecondHeading() {
 }
 
 const Heading = () => (
-  <h1 className="text-[30px] w-full md:text-4xl lg:text-5xl font-semibold tracking-tight leading-[40.5px]">
+  <h1 className="text-[30px] w-full md:text-4xl lg:text-5xl font-semibold tracking-normal leading-[40.5px]">
     Pioneering the Future of{" "}
     <span className="bg-gradient-to-b font-semibold tracking-tight from-[#A15BE4] to-[#000EA3] bg-clip-text text-transparent">
       AI
@@ -130,15 +127,15 @@ const Heading = () => (
 )
 
 const SubHeading = () => (
-  <div className=" bg-gradient-to-b from-[#A15BE4] to-[#000EA3] bg-clip-text text-transparent -mt-1 md:mt-2 
-  text-[30px] md:text-4xl lg:text-5xl font-semibold tracking-tight leading-[40.5px]
-  ">
-    Quantum Computing
-  </div>
+  <div className="bg-gradient-to-b from-[#A15BE4] to-[#000EA3] bg-clip-text text-transparent -mt-1 md:mt-2">
+      <div className="text-[30px] md:text-4xl lg:text-5xl font-semibold tracking-normal leading-[40.5px]">
+        Quantum computing
+      </div>
+    </div>
 )
 
 const Desc = () => (
-  <p className="mx-auto -mt-[14px]  w-[90vw] md:max-w-[50vw] text-center text-[16px] font-thin text-muted-foreground md:px-0">
+  <p className={`mx-auto -mt-[14px]  w-[90vw] md:max-w-[50vw] text-center text-[16px] font-thin text-muted-foreground md:px-0 ${inter.className} `}>
     Our groundbreaking Quantum Neural Networks (QNN) combine the power of quantum computing with AI to solve problems
     that were previously thought impossible. Explore how we&apos;re changing the future.
   </p>
@@ -146,7 +143,7 @@ const Desc = () => (
 
 const CtaButton = () => (
   <div className="mt-[32px]">
-    <ButtonZen className="transition-all ease-in-out font-extralight duration-300">
+    <ButtonZen className="transition-all ease-in-out font-extralight h-[40px] w-[224px] duration-300">
       <Link href="/technology">Discover Our Technology</Link>
     </ButtonZen>
   </div>

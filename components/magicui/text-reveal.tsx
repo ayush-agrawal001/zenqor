@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, MotionValue, useScroll, useTransform } from "motion/react";
-import React, { ComponentPropsWithoutRef, FC, ReactNode, useEffect, useRef, useState } from "react";
+import React, { ComponentPropsWithoutRef, FC, ReactNode, useRef } from "react";
 
 import { cn } from "@/lib/utils";
 import { Inter } from "next/font/google";
@@ -12,9 +12,10 @@ export interface TextRevealProps extends ComponentPropsWithoutRef<"div"> {
   children: ReactNode;
   headForMobile?: string;
   isHeadHis?: boolean;
+  type? : "tech" | "solution"
 }
 
-export const TextReveal: FC<TextRevealProps> = ({ children, className, isHeadHis, headForMobile }) => {
+export const TextReveal: FC<TextRevealProps> = ({ children, className, isHeadHis, headForMobile, type = "solution" }) => {
   const targetRef = useRef<HTMLDivElement | null>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -24,17 +25,17 @@ export const TextReveal: FC<TextRevealProps> = ({ children, className, isHeadHis
   const nodes = React.Children.toArray(children);
 
   const divRef = useRef<HTMLDivElement>(null);
-  const [height, setHeight] = useState(0);
+  // const [height, setHeight] = useState(0);
 
-  console.log(height)
+  //console.log(height)
 
-  useEffect(() => {
-    if (divRef.current) {
-      // Using getBoundingClientRect to get an accurate height
-      const measuredHeight = divRef.current.getBoundingClientRect().height;
-      setHeight(measuredHeight);
-    }
-  }, []); 
+  // useEffect(() => {
+  //   if (divRef.current) {
+  //     // Using getBoundingClientRect to get an accurate height
+  //     // const measuredHeight = divRef.current.getBoundingClientRect().height;
+  //     // setHeight(measuredHeight);
+  //   }
+  // }, []); 
 
   const processedNodes: ReactNode[] = [];
   nodes.forEach((node) => {
@@ -61,7 +62,7 @@ export const TextReveal: FC<TextRevealProps> = ({ children, className, isHeadHis
   return (
     <div ref={targetRef} className={cn("relative z-0 h-[200vh] flex flex-col items-center md:block", className)}>
       <div ref={divRef} className={`sticky ${
-        isHeadHis ? 'top-[25vh] sm:top-[28vh] md:top-[30vh]' : 'top-[15vh] sm:top-[18vh] md:top-[20vh]'
+        isHeadHis ? `top-[25vh] sm:top-[28vh] md:top-[25vh] ${ type === "tech"  &&`lg:top-[30vh] xl:top-[30vh]`}` : `top-[15vh] sm:top-[18vh] md:top-[20vh] ${ type === "tech" && `lg:top-[25vh] xl:top-[30vh]`} `
       } mx-auto flex flex-col items-center md:items-start md:flex-row h-fit min-h-[40vh] sm:min-h-[50vh] md:h-[60vh] max-w-full bg-transparent mb-10`}>
         <h2 
           style={{

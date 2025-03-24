@@ -3,6 +3,7 @@ import type { Metadata } from "next"
 import { Montserrat } from "next/font/google"
 import "./globals.css"
 import { NavBar } from "@/components/nav-bar"
+import { SmoothScrollerProvider } from "@/components/smoothScrollerContext"
 
 export const metadata: Metadata = {
   title: "Zenqor - Quantum Neural Networks",
@@ -20,12 +21,15 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+
   return (
     <html lang="en" className={`dark`}>
-      <body className={`${MontserratFont.className} bg-[#0D0B10]`}>
-        <NavBar />
-        {children}
-      </body>
+        <body className={`${MontserratFont.className} bg-[#0D0B10]`}>
+      <SmoothScrollerProvider>
+            <NavBar />
+            {children}
+      </SmoothScrollerProvider>
+        </body>
     </html>
   )
 }

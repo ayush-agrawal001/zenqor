@@ -24,42 +24,50 @@ const CardSolutions = () => {
       {
         title: "Healthcare",
         desc: `Health care 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it
-                homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live
-                companion.`,
+               homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live
+               companion.`,
         img: "/healthCare.png",
         style: "basic",
-        pad: "top-[20vh]",
+        // For small screens (like a 14" laptop) use less top offset, and increase it on larger screens
+        pad: "sm:top-[15vh] md:top-[18vh] lg:top-[20vh]",
         bottomPadding: "35vh",
         ref: refCard0,
       },
       {
         title: "Finance",
-        desc: `Finance 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live companion.`,
+        desc: `Finance 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it
+               homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live
+               companion.`,
         img: "/financeSoln.png",
         style: "revert",
-        pad: "top-[25vh]",
+        pad: "sm:top-[20vh] md:top-[23vh] lg:top-[25vh]",
         bottomPadding: "30vh",
         ref: refCard1,
       },
       {
         title: "Artificial Intelligence (AI)",
-        desc: `AI 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live companion.`,
+        desc: `AI 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it
+               homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live
+               companion.`,
         img: "/AISoln.png",
         style: "basic",
-        pad: "top-[30vh]",
+        pad: "sm:top-[25vh] md:top-[28vh] lg:top-[30vh]",
         bottomPadding: "25vh",
         ref: refCard2,
       },
       {
         title: "Space",
-        desc: `Space 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live companion.`,
+        desc: `Space 24/7 access. This way, the student can learn and get help from anywhere, at any time. Be it
+               homework or midnight exam preparation, Misty is there to guide them in detail, acting like your live
+               companion.`,
         img: "/spaceSoln.png",
         style: "revert",
-        pad: "top-[35vh]",
+        pad: "sm:top-[30vh] md:top-[33vh] lg:top-[35vh]",
         bottomPadding: "20vh",
         ref: refCard3,
       },
     ];
+    
 
     return (
       <div ref={containerRef} className="relative">
@@ -70,7 +78,7 @@ const CardSolutions = () => {
               key={index} 
               index={index} 
               item={item}
-              containerRef={containerRef}
+              // containerRef={containerRef}
               bottomPadding={item.bottomPadding}
             />
           })}
@@ -84,27 +92,27 @@ const CardSoln = ({
   item, 
   // isLast,
   bottomPadding,
-  containerRef
+  // containerRef
 } : {
   index: number, 
   item: CardContent, 
   bottomPadding: string,
   // isLast: boolean,
-  containerRef?: MutableRefObject<HTMLDivElement | null>
+  // containerRef?: MutableRefObject<HTMLDivElement | null>
 }) => {
     // For individual card animations
     const { scrollYProgress } = useScroll({
         target: item.ref,
-        offset: ["0 1", "1.33 1"],
+        offset: ["0 1", "1.1 1"],
     });
     
     // For end of scroll detection
-    const { scrollYProgress: containerScrollProgress } = useScroll({
-        target: containerRef,
-        offset: ["start start", "end end"],
-    });
+    // const { scrollYProgress: containerScrollProgress } = useScroll({
+    //     target: containerRef,
+    //     offset: ["start start", "end end"],
+    // });
     
-    console.log(containerScrollProgress)
+    // //console.log(containerScrollProgress)
 
     const scaleProgressCard = useTransform(scrollYProgress, [0, 1], [0.8, 1]);
     

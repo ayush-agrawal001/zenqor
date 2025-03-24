@@ -56,7 +56,7 @@ const contentTech = [
     head : "Quantum Neural Networks (QNN)", 
     content : () =>(
     <>
-        <TextReveal isHeadHis={true} headForMobile="Quantum Neural Networks (QNN)">
+        <TextReveal isHeadHis={true} headForMobile="Quantum Neural Networks (QNN)" type="tech">
             Quantum Neural Networks (QNNs) mark the next evolution in AI, harnessing the power of quantum computing to outperform classical neural networks. QNNs leverage quantum superposition and entanglement to process vast amounts of data exponentially faster, solving problems that are impossible for classical AI.
             <br></br>
             <br></br>
@@ -68,7 +68,7 @@ const contentTech = [
     head : "Artificial Intelligence (AI)", 
     content : () =>(
     <>
-        <TextReveal headForMobile="Artificial Intelligence (AI)">
+        <TextReveal headForMobile="Artificial Intelligence (AI)" type="tech" >
             Artificial Intelligence (AI) is transforming industries by enabling machines to learn, adapt, and make intelligent decisions. Traditional AI relies on classical neural networks, but its potential is limited by computational constraints. We push AI beyond its limits by integrating advanced deep learning, reinforcement learning, and generative models to solve real-world challenges. 
             <br></br>
             <br></br>
@@ -81,7 +81,7 @@ const contentTech = [
     head : "Quantum Computing", 
     content : () =>(
     <>
-        <TextReveal headForMobile="Quantum Computing">
+        <TextReveal headForMobile="Quantum Computing" type="tech" >
             Quantum Computing (QC) redefines computation by leveraging qubits, entanglement, and superposition to solve problems at an unprecedented scale. Unlike classical computing, which processes information in binary states (0s and 1s), QC performs calculations across multiple states simultaneously, enabling massive parallelism. 
             <br></br>
             <br></br>
@@ -108,12 +108,12 @@ export default function ScrollTextAboutUs({type} : {type : "tech" | "solution"})
 
     return (
         <div className="w-full">
-            <div className="flex flex-col justify-center items-center space-y-16 sm:space-y-20 md:space-y-24 lg:space-y-36">
+            <div className={`flex flex-col justify-center items-center space-y-16 ${type === "solution" ? `space-y-20 md:space-y-44 lg:space-y-36` : `space-y-48 md:space-y-44 lg:space-y-36`} `}>
                 {content.map((item, i) => (
                     <div 
                         key={i}
                         ref={ref1} 
-                        className="flex flex-col items-center justify-center md:items-start md:flex-row md:gap-8 lg:gap-[180px] w-[92vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw]"
+                        className={`flex flex-col items-center justify-center md:items-start md:flex-row md:gap-8 ${ type === "tech" ? `lg:gap-[109px]` : `lg:gap-[180px]`} w-[92vw] sm:w-[90vw] md:w-[85vw] lg:w-[80vw]`}
                     >
                         <div className="hidden md:block md:h-[200vh] relative">
                             <h2
@@ -123,9 +123,9 @@ export default function ScrollTextAboutUs({type} : {type : "tech" | "solution"})
                             }}
                             className={`text-xl sm:text-2xl sticky ${
                                 item.head === "History" || item.head === "Quantum Neural Networks (QNN)" 
-                                ? `top-[25vh] sm:top-[28vh] md:top-[30vh]` 
-                                : `top-[15vh] sm:top-[18vh] md:top-[20vh]`
-                            } md:h-[60vh] md:text-3xl text-center md:text-start lg:text-[39.81px] font-semibold mb-6 md:mb-10 w-full max-w-[250px]`}>
+                                ? `top-[25vh] sm:top-[28vh] md:top-[25vh] ${ type === "tech" && `lg:top-[30vh] xl:top-[30vh]` }` 
+                                : `top-[15vh] sm:top-[18vh] md:top-[20vh] ${ type === "tech" && `lg:top-[25vh] xl:top-[30vh]`} `
+                            } md:h-[60vh] md:text-3xl text-center md:text-start lg:text-[39.81px] text-wrap font-semibold mb-6 md:mb-10 ${ type === "solution" ? ` lg:w-[160px]` : ` lg:w-[245px]` }`}>
                                 {item.head}
                             </h2>
                         </div>

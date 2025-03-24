@@ -3,11 +3,11 @@
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { AnimatePresence, motion } from "framer-motion"
+import { AnimatePresence, motion, useMotionValueEvent, useScroll } from "framer-motion"
 import { useState } from "react"
-import ButtonZen from "./style/buttonZen"
 import { Inter } from "next/font/google"
 import { Menu, X } from "lucide-react"
+import ContactFormDialog from "./dialougue-contact_form"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -19,6 +19,8 @@ export function NavBar() {
   const pathName = usePathname()
   const [whichHovered, setWhichHovered] = useState<Navigation>({ nav: "none" })
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [scrollValue, setScrollValue] = useState(0)
+  const { scrollYProgress } = useScroll()
 
   const activeClassName = "text-white/90"
 
@@ -30,12 +32,20 @@ export function NavBar() {
     { href: "/contact", label: "Contact", nav: "contact" },
   ]
 
+  const location = usePathname();
+  useMotionValueEvent(scrollYProgress, "change", (latest) => {
+      setScrollValue(latest)
+  })
+
+
   return (
-    <nav className={`fixed left-0 right-0 top-0 z-50 bg-transparent backdrop-blur-md`}>
+    <nav className={`fixed left-0 right-0 top-0 z-50 ${(scrollValue >= 0 && scrollValue <= 0.15 && location === "/") ? ` bg-inherit ` : ` bg-transparent backdrop-blur-md `}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between p-4">
         <div className="flex items-center gap-2">
           <Image src="/zenqor.svg" alt="Zenqor Logo" width={40} height={40} />
-          <span className="text-2xl font-semibold text-[#FDF7FF]">Zenqor</span>
+          <Link href={"/"}>
+            <span className="text-2xl font-semibold text-[#FDF7FF]">Zenqor</span>
+          </Link>
         </div>
 
         {/* Desktop Menu */}
@@ -57,11 +67,7 @@ export function NavBar() {
 
         {/* Mobile Menu Button */}
         <div className="flex gap-10">
-        <ButtonZen className="hidden w-[137px] h-[36px] font-normal text-[#E6E1E8] md:flex justify-center transition-all ease-in-out duration-300"> 
-          <Link href="/get-started" className={`font-normal ${inter.className}`}>
-            Get Started
-          </Link>
-        </ButtonZen>
+        <ContactFormDialog></ContactFormDialog>
         <button className="lg:hidden text-white z-10" onClick={() => setIsMenuOpen(!isMenuOpen)}>
           {isMenuOpen ? <X size={36} /> : <Menu size={36} />}
         </button>

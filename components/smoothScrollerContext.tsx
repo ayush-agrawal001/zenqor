@@ -10,8 +10,9 @@ export const SmoothScrollerProvider = ({ children }: { children: React.ReactNode
   const [rafState, setRafState] = useState<number>(0);
 
   useEffect(() => {
-    const scroller = new Lenis();
-
+    const scroller = new Lenis({
+      wheelMultiplier : 0.3
+    });
     function raf(time : number) {
         scroller.raf(time);
         requestAnimationFrame(raf);

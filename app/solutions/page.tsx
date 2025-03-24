@@ -63,7 +63,7 @@ export default function Solutions() {
           <CardSolutions />
         </motion.div>
 
-        <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] py-12 sm:py-16 md:py-20 bg-slate-800 -mt-72 sm:-mt-20 md:-mt-24 lg:-mt-72 relative flex flex-col justify-center items-center rounded-lg">
+        <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] py-12 sm:py-16 md:py-20 bg-slate-800 -mt-72 sm:-mt-20 md:-mt-72 relative flex flex-col justify-center items-center rounded-lg">
           <div className="px-4 sm:px-6 md:px-8 text-center">
             <h2 className="font-medium text-2xl sm:text-3xl md:text-[34px] mb-4">Shape the Future with Us</h2>
             <div className="flex flex-col w-full justify-center items-center gap-6 sm:gap-8 md:gap-[48px]">
@@ -89,7 +89,7 @@ export default function Solutions() {
 
 const Heading = () => {
   return (
-    <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight leading-tight text-center md:text-left">
+    <h1 className="text-[30px] w-full md:text-4xl lg:text-5xl font-semibold tracking-normal leading-[40.5px]">
       Solutions for{" "}
       <span className="bg-gradient-to-b font-semibold tracking-tight from-[#A15BE4] to-[#000EA3] bg-clip-text text-transparent">
         Every Industry
@@ -100,7 +100,7 @@ const Heading = () => {
 
 const Desc = () => {
   return (
-    <p className="mx-auto mt-4 w-full text-clip md:text-left md:max-w-md text-sm font-thin text-muted-foreground">
+    <p className={`mx-auto -mt-[14px] w-[90vw] text-center md:max-w-md text-[16px] leading-6 text-muted-foreground px-4 md:px-0 ${inter.className}`}>
       Our Quantum Neural Networks are transforming industries.
     </p>
   )

@@ -1,26 +1,24 @@
-import React from 'react';
-import Image from 'next/image';
+import type React from "react"
+import Image from "next/image"
 
 interface SocialLink {
-  icon: string;
-  alt: string;
-  href: string;
+  icon: string
+  alt: string
+  href: string
 }
 
 const socialLinks: SocialLink[] = [
-  { icon: "facebook.svg", alt: 'Facebook', href: 'https://facebook.com' },
-  { icon: "twitter.svg", alt: 'Twitter', href: 'https://twitter.com' },
-  { icon: "instagram_or.svg", alt: 'Instagram', href: 'https://instagram.com' },
-  { icon: "linkedin.svg", alt: 'LinkedIn', href: 'https://linkedin.com' },
-];
+  { icon: "facebook.svg", alt: "Facebook", href: "https://facebook.com" },
+  { icon: "twitter.svg", alt: "Twitter", href: "https://twitter.com" },
+  { icon: "instagram_or.svg", alt: "Instagram", href: "https://instagram.com" },
+  { icon: "linkedin.svg", alt: "LinkedIn", href: "https://linkedin.com" },
+]
 
 const SocialLinks: React.FC = () => {
   return (
-    <div className="flex flex-col text-[19.2px]">
-      <h2 className="text-xl font-medium leading-none text-white">
-        Follow Us
-      </h2>
-      <div className="flex gap-8 items-center mt-6 w-44 max-w-full">
+    <div className="flex flex-col">
+      <h2 className="text-[19.2px] font-medium leading-none text-white">Follow Us</h2>
+      <div className="flex gap-6 sm:gap-8 items-center mt-6 w-full max-w-[176px]">
         {socialLinks.map((link, index) => (
           <a
             key={index}
@@ -41,7 +39,8 @@ const SocialLinks: React.FC = () => {
         ))}
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default SocialLinks;
+export default SocialLinks
+

@@ -7,7 +7,6 @@ body {
 }
 
 
-
 * {
   scrollbar-width: thin;
   scrollbar-color: #333 #0D0B10; /* thumb and track */
@@ -23,14 +22,14 @@ body {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: -30px;
+    bottom: -20%;
     transform: translateX(-50%);
-    width: 120%;
-    height: 60px;
-    background: radial-gradient(ellipse at center, rgba(var(--glow-color, 111, 70, 251), 0.7) 0%, rgba(var(--glow-color, 111, 70, 251), 0) 70%);
+    width: 70%;
+    height: 16px;
+    background: radial-gradient(ellipse at center, rgba(161, 91, 228, 1) 0%, rgba(0, 14, 163, 1) 100%);
     filter: blur(10px);
     pointer-events: none;
-    z-index: -1;
+    z-index: 10;
     opacity: 0; /* Initially hidden */
     transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
   }
