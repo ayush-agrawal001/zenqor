@@ -4,25 +4,30 @@ import Link from "next/link"
 import { WarpBackground } from "./warp-background"
 import ButtonZen from "./style/buttonZen"
 import HeadingAndDesc from "./style/headingAndDesc"
-import { useState, useEffect} from "react"
+import { useState, useEffect, useRef } from "react"
 import { useMotionValueEvent, useScroll } from "framer-motion"
 import HomeSecondHeading from "./homeSecondHeading"
 import { Inter } from "next/font/google"
+import { useSmoothScroller } from "./smoothScrollerContext"
 
 const inter = Inter({ subsets: ["latin"], weight: "400" })
-
 
 export default function HomeHeading() {
   const [isInViewSec, setIsInViewSec] = useState(false)
   const [isMobile, setIsMobile] = useState(false)
   const [scrollVal, setScrollVal] = useState(0)
-
+  
   const screenScroll = useScroll()
+  const lenis = useSmoothScroller()
+
+  // Refs to track last scroll position and snapping state
+  const lastScroll = useRef(0)
+  const isSnapping = useRef(false)
 
   // Check if device is mobile on component mount and window resize
   useEffect(() => {
     const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768) // Changed from 640px to 768px for better consistency
+      setIsMobile(window.innerWidth < 768)
     }
 
     checkMobile()
@@ -34,9 +39,28 @@ export default function HomeHeading() {
   // Only track scroll progress for non-mobile devices
   useMotionValueEvent(screenScroll.scrollYProgress, "change", (latest) => {
     if (!isMobile) {
-      // Adjusted threshold to be more consistent across screen sizes
-      setIsInViewSec(latest > 0.15)
       setScrollVal(latest)
+
+      // When in the snapping zone and not currently snapping
+      if (lenis && latest > 0.12 && latest < 0.16 && !isSnapping.current) {
+        // Determine scroll direction based on last scroll value
+        const targetProgress = latest > lastScroll.current ? 0.16 : 0.14
+        // Calculate total scrollable distance (accounting for viewport height)
+        const totalScrollable = document.documentElement.scrollHeight - window.innerHeight
+        const targetPosition = totalScrollable * targetProgress
+
+        isSnapping.current = true
+        lenis.scrollTo(targetPosition, { duration: 0.3 })
+
+        // Re-enable snapping after the animation completes
+        setTimeout(() => {
+          isSnapping.current = false
+        }, 350)
+      }
+
+      // Update in-view state based on a 0.15 threshold
+      setIsInViewSec(latest > 0.15)
+      lastScroll.current = latest
     }
   })
 
@@ -74,12 +98,10 @@ export default function HomeHeading() {
               </div>
             </WarpBackground>
           )}
-          
-            <div
-              className={`relative flex items-end sm:items-center justify-center h-[200vh] md:h-[250vh] lg:h-[250vh] w-full`}
-            >
-              { isInViewSec && <HomeSecondHeading /> }
-            </div>
+
+          <div className={`relative flex items-end sm:items-center justify-center h-[200vh] md:h-[250vh] lg:h-[250vh] w-full`}>
+            { isInViewSec && <HomeSecondHeading /> }
+          </div>
         </>
       )}
     </>
@@ -105,18 +127,15 @@ const SubHeading = () => {
 }
 
 const Desc = () => (
-  <p
-    className={`mx-auto -mt-[14px] w-[90vw] text-center md:max-w-md text-[16px] leading-6 text-muted-foreground px-4 md:px-0 ${inter.className}`}
-  >
+  <p className={`mx-auto -mt-[14px] w-[90vw] text-center md:max-w-md text-[16px] leading-6 text-muted-foreground px-4 md:px-0 ${inter.className}`}>
     Combining AI with Quantum Computing to Create the Next Generation of Artificial Intelligence.
   </p>
 )
 
 const CtaButton = () => (
   <div className="mt-[32px]">
-    <ButtonZen className="transition-all ease-in-out font-normal h-[40px] w-[224px] duration-300">
+    <ButtonZen className="transition-all ease-in-out h-[40px] w-[224px] duration-300">
       <Link href="/technology">Discover Our Technology</Link>
     </ButtonZen>
   </div>
 )
-

@@ -44,7 +44,10 @@ export function NavBar() {
         <div className="flex items-center gap-2">
           <Image src="/zenqor.svg" alt="Zenqor Logo" width={40} height={40} />
           <Link href={"/"}>
-            <span className="text-2xl font-semibold text-[#FDF7FF]">Zenqor</span>
+            <div className="flex flex-col items-center gap-0">
+              <span className="text-[19.2px] font-semibold text-[#FDF7FF] p-0 m-0">Z E N Q O R</span>
+              <span className={`text-[7.72px] font-normal text-[#B4AFB5] p-0 m-0 ${inter.className}`}>QUANTUM NEURAL NETWORK</span>
+            </div>
           </Link>
         </div>
 

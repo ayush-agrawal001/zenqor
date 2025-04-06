@@ -29,15 +29,15 @@ export default function About() {
         <div className="flex flex-col items-center h-full w-full pt-32 md:pt-48 lg:pt-64">
             <HeadingAndDesc heading={<Heading />} desc={<Desc />} className=""/>
             
-            <div className="w-[90vw] md:w-[85vw] lg:w-[80vw] h-[30vh] md:h-[40vh] lg:h-[60vh] xl:h-[80vh] overflow-hidden relative mt-12 md:mt-16 lg:mt-24 motion-translate-x-in-[0%] motion-translate-y-in-[80%] motion-delay-[50ms]">
-                <Image
-                    src="/aboutUs2.png"
-                    className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-all duration-300 aspect-[16/9]"
-                    fill
-                    priority
-                    alt="Laboratory"
-                />
-            </div>
+            <div className="w-[90vw] sm:w-[85vw] md:w-[75vw] h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-screen overflow-hidden relative mt-[60px] sm:mt-[80px] md:mt-[120px] motion-translate-x-in-[0%] motion-translate-y-in-[80%] motion-delay-[50ms]">
+                      <Image
+                        src="/aboutUs2.png"
+                        className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-all duration-300 aspect-[16/9]"
+                        fill
+                        priority
+                        alt="tech"
+                      />
+                    </div>
             
             <div className="">
                 <motion.div 
@@ -60,10 +60,9 @@ export default function About() {
                 </motion.div>
             </div>
             
-            <div className="lg:mb-32 mt-16 md:mt-24 lg:mt-32 w-full">
+            <div className="lg:mb-[10vh] mt-16 md:mt-24 lg:mt-32 w-full">
                 <ScrollTextAboutUs type="solution"></ScrollTextAboutUs>
             </div>
-            
             
             <LargeCtaCompo></LargeCtaCompo>
             

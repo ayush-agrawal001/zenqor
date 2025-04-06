@@ -4,7 +4,7 @@ import Link from "next/link"
 import ButtonZen from "./style/buttonZen"
 import HeadingAndDesc from "./style/headingAndDesc"
 import { useEffect, useRef, useState } from "react"
-import { useScroll, motion, AnimatePresence, useTransform, useSpring, useInView } from "framer-motion"
+import { useScroll, motion, AnimatePresence, useTransform, useSpring, useMotionValueEvent } from "framer-motion"
 import dynamic from "next/dynamic"
 import { Inter } from "next/font/google"
 
@@ -19,10 +19,21 @@ export default function HomeSecondHeading() {
   // const [isInView, setIsInView] = useState(false)
   const ref = useRef(null)
   const parentRef = useRef(null)
-  const imageRef = useRef(null)
-
-  const isInViewImage = useInView(parentRef, { amount: 0.6})
+  const videoRef = useRef<HTMLVideoElement>(null)
   
+  const { scrollYProgress : scrollYProgressImage } = useScroll({
+    target: videoRef,
+    offset: ['center center', '1 0.5'],
+  });
+  
+  // Boolean state that becomes true when the scroll progress is between 0 and 1
+  const [isInViewImage, setIsInView] = useState(false);
+  
+  // Subscribe to changes in scrollYProgress and update isInView accordingly
+  useMotionValueEvent(scrollYProgressImage, 'change', (latest) => {
+    setIsInView(latest >= 0 && latest <= 1);
+  });
+
   const isMobile = useMediaQuery("(max-width: 768px)")
   // const isTablet = useMediaQuery("(max-width: 1024px)")
   
@@ -32,7 +43,6 @@ export default function HomeSecondHeading() {
     offset: ["start end", "end start"],
   })
 
-  
 
   const opacityRaw = useTransform(scrollYProgress, [0.3, 0.6, 0.7], [0.5, 1, 0.5])
 
@@ -72,7 +82,7 @@ export default function HomeSecondHeading() {
               initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, scale: 1, transition: { duration: 0.2 } }}
-              className="w-full "
+              className="w-full"
             >
               <HeadingAndDesc
                 heading={<Heading />}
@@ -106,7 +116,7 @@ export default function HomeSecondHeading() {
                   opacity: opacity,
                 }}
               >
-                {showChild && <HomeVideo imageRef={imageRef} isInViewImage={isInViewImage}></HomeVideo>}
+                {showChild && <HomeVideo videoRef={videoRef} isInViewImage={isInViewImage}></HomeVideo>}
               </motion.div>
             </motion.div>
             </div>
@@ -127,8 +137,8 @@ const Heading = () => (
 )
 
 const SubHeading = () => (
-  <div className="bg-gradient-to-b from-[#A15BE4] to-[#000EA3] bg-clip-text text-transparent -mt-1 md:mt-2">
-      <div className="text-[30px] md:text-4xl lg:text-5xl font-semibold tracking-normal leading-[40.5px]">
+  <div className="bg-gradient-to-b from-[#A15BE4] to-[#000EA3] bg-clip-text text-transparent -mt-1 md:mt-2 h-[51px]">
+      <div className="text-[30px] md:text-4xl lg:text-5xl font-semibold tracking-normal leading-[40.5px] h-full">
         Quantum computing
       </div>
     </div>
@@ -143,7 +153,7 @@ const Desc = () => (
 
 const CtaButton = () => (
   <div className="mt-[32px]">
-    <ButtonZen className="transition-all ease-in-out font-extralight h-[40px] w-[224px] duration-300">
+    <ButtonZen className="transition-all ease-in-out h-[40px] w-[224px] duration-300">
       <Link href="/technology">Discover Our Technology</Link>
     </ButtonZen>
   </div>

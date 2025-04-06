@@ -5,9 +5,9 @@ import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] })
 
-const LargeCtaCompo = () => {
+const LargeCtaCompo = () => { 
     return (
-        <div className=" relative w-[90vw] z-10 md:w-[85vw] lg:w-[80vw] py-12 md:py-16 lg:py-24 bg-transparent mt-16 md:mt-24 lg:mt-32 flex justify-center items-center rounded-lg overflow-hidden">
+        <div className=" relative w-[90vw] z-10 md:w-[85vw] lg:w-[80vw] lg:h-[320px] py-12 md:py-16 lg:py-24 bg-transparent mt-16 md:mt-24 lg:mt-32 flex justify-center items-center gap-[48px] rounded-lg overflow-hidden">
                 <video
                     className="absolute top-0 left-0 w-full h-full object-cover opacity-100 transition-all aspect-[16/9] rounded-lg"
                     autoPlay

@@ -1,32 +1,33 @@
 import Image from "next/image"
-import { MutableRefObject } from "react"
+import { MutableRefObject, useEffect } from "react"
 
-const HomeVideo = ({imageRef, isInViewImage} : {imageRef : MutableRefObject<HTMLImageElement | null>, isInViewImage : boolean}) => {
+const HomeVideo = ({videoRef, isInViewImage} : {videoRef : MutableRefObject<HTMLVideoElement | null>, isInViewImage : boolean}) => {
+    
+    useEffect(() => {
+      if (videoRef.current) {
+        if (isInViewImage) {
+          videoRef.current.play();
+        } else {
+          videoRef.current.pause();
+        }
+      }
+    }, [isInViewImage])
+
+
     return (
-        <div className="relative w-full h-full aspect-[16/9] group overflow-visible motion-translate-x-in-[0%] motion-translate-y-in-[82%] motion-delay-0">
+        <div className=" relative w-full h-full aspect-[16/9] group overflow-visible motion-translate-x-in-[0%] motion-translate-y-in-[82%] motion-delay-0">
                   <Image
                     src="/laboratoryImg.png"
                     alt="Hover Background"
                     fill
-                    className="relative blur-2xl shadow-2xl scale-100 object-cover transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+                    className="relative blur-3xl shadow-2xl scale-110 object-cover transition-all duration-300 opacity-0 group-hover:opacity-100"
                   />
 
-                <Image
-                  ref={imageRef}
-                  src="/laboratoryImg.png"
-                  className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 ${
-                    !isInViewImage ? "opacity-100" : "opacity-0"
-                  }`}
-                  fill
-                  priority
-                  alt="Laboratory"
-                />
-
                 <video
-                  className={`w-full h-full object-cover absolute inset-0 transition-opacity duration-300 hover:opacity-100 ${
-                    isInViewImage ? "opacity-90" : "opacity-0"
+                  ref={videoRef}
+                  className={`w-full h-full object-cover absolute inset-0 transition-all duration-300 hover:opacity-100 ${
+                    true ? "opacity-90" : "opacity-0"
                   }`}
-                  autoPlay
                   loop
                   muted
                   preload="metadata" // consider 'auto' if you need more buffering

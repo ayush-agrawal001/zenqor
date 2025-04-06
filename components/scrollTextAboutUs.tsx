@@ -39,11 +39,10 @@ const contentSoln = [
     content : () =>(
         <>
         <TextReveal headForMobile="Vision">
-            We envision a future where the fusion of quantum computing and AI drives a fundamental transformation across every sector of human progress. Our long-term mission is to develop Quantum Artificial General Intelligence (QAGI)—an advanced AI system that learns, reasons, and makes decisions with the depth and adaptability of human cognition. By leveraging the immense computational power of quantum mechanics, QAGI will unlock new frontiers in problem-solving, pushing the boundaries of what AI can achieve.
+            We envision a future where the fusion of quantum computing and AI drives a fundamental transformation across every sector of human progress. Our long-term mission is to develop Quantum Artificial General Intelligence (QAGI)—an advanced AI system that learns, reasons, and makes decisions with the depth and adaptability of human cognition.
             <br></br>
             <br></br>
-            This revolutionary technology will redefine possibilities across industries, solving complex challenges in healthcare, drug discovery, space exploration, cybersecurity, logistics, and climate change. By processing vast datasets and modeling intricate systems beyond classical AI&apos;s capabilities, QAGI will provide unprecedented solutions to some of the world&apos;s most pressing issues.
-            <br></br>
+            This revolutionary technology will redefine possibilities across industries, solving complex challenges in healthcare, drug discovery, space exploration, cybersecurity, logistics, and climate change. By processing vast datasets and modeling intricate systems beyond classical AI&apos;s capabilities.
             <br></br>
             As we continue to innovate, we position ourselves at the forefront of a global technological shift. From designing life-saving drugs at the molecular level to optimizing deep-space missions, quantum-powered intelligence will enhance every aspect of life. By pioneering QAGI, we aim not just to advance AI but to reshape the future, ensuring that the synergy of quantum computing and artificial intelligence drives progress, innovation, and a better world for generations to come.
         </TextReveal>
@@ -108,7 +107,11 @@ export default function ScrollTextAboutUs({type} : {type : "tech" | "solution"})
 
     return (
         <div className="w-full">
-            <div className={`flex flex-col justify-center items-center space-y-16 ${type === "solution" ? `space-y-20 md:space-y-44 lg:space-y-36` : `space-y-48 md:space-y-44 lg:space-y-36`} `}>
+            <div className={`flex flex-col justify-center items-center space-y-16 ${
+                type === "solution"
+                    ? 'space-y-[20vh] md:space-y-[44vh] lg:space-y-[36vh]'
+                    : 'space-y-[48vh] md:space-y-[44vh] lg:space-y-[36vh]'
+                } `}>
                 {content.map((item, i) => (
                     <div 
                         key={i}

@@ -11,11 +11,12 @@ export const SmoothScrollerProvider = ({ children }: { children: React.ReactNode
 
   useEffect(() => {
     const scroller = new Lenis({
-      wheelMultiplier : 0.3
+      duration: 1.2,        // Set default duration for scroll animations
+      wheelMultiplier: 0.4,
     });
-    function raf(time : number) {
-        scroller.raf(time);
-        requestAnimationFrame(raf);
+    function raf(time: number) {
+      scroller.raf(time);
+      requestAnimationFrame(raf);
     }
 
     const rf = requestAnimationFrame(raf);
@@ -24,18 +25,21 @@ export const SmoothScrollerProvider = ({ children }: { children: React.ReactNode
     setLenisRaf(scroller);
 
     return () => {
-        if (lenisRaf) {
-            lenisRaf?.destroy();
-            cancelAnimationFrame(rafState);
-        }
+      if (scroller) {
+        scroller.destroy();
+        cancelAnimationFrame(rafState);
+      }
     };
   }, []);
 
-  return <SmoothScrollerContext.Provider value={lenisRaf}>{children}</SmoothScrollerContext.Provider>;
+  return (
+    <SmoothScrollerContext.Provider value={lenisRaf}>
+      {children}
+    </SmoothScrollerContext.Provider>
+  );
 };
 
 export const useSmoothScroller = () => {
   const lenis = useContext(SmoothScrollerContext);
-
   return lenis;
 };
