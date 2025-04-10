@@ -5,10 +5,9 @@ import Image from "next/image"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { useRef } from "react"
 import CardSolutions from "@/components/cardSolutions"
-import ButtonZen from "@/components/style/buttonZen"
-import Link from "next/link"
 import Footer from "@/components/footer"
 import { Inter } from "next/font/google"
+import LargeCtaCompo from "@/components/LargeCtaCompo"
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -29,15 +28,23 @@ export default function Solutions() {
           <HeadingAndDesc heading={<Heading />} desc={<Desc />} className="relative z-10" />
         </div>
 
-        <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] lg:w-[75vw] h-[30vh] sm:h-[35vh] md:h-[50vh] lg:h-screen relative mt-12 sm:mt-16 md:mt-20 lg:mt-[120px] motion-translate-x-in-[0%] motion-translate-y-in-[80%] motion-delay-[100ms]">
-          <Image
-            src="/technology.png"
-            className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-all duration-300 aspect-[16/9] rounded-lg"
-            fill
-            priority
-            alt="Laboratory"
-          />
-        </div>
+        <div className="w-[80vw] h-[40vh] md:h-screen relative hover:opacity-100 mt-20">
+                                <div className="relative w-full h-full aspect-[16/9] group overflow-visible motion-translate-x-in-[0%] motion-translate-y-in-[82%] motion-delay-0">
+                                        <Image
+                                            src="/technology.png"
+                                            alt="Hover Background"
+                                            fill
+                                            className="relative blur-3xl -z-20 shadow-2xl scale-110 object-cover transition-all duration-300 opacity-0 group-hover:opacity-100"
+                                        />
+                                        <Image
+                                            src="/technology.png"
+                                            className="w-full h-full z-0 object-cover opacity-50 group-hover:opacity-100 inset-0 transition-all duration-300 aspect-[16/9]"
+                                            fill
+                                            priority
+                                            alt="tech"
+                                        />
+                                    </div>
+                            </div>
 
         <motion.div
           style={{
@@ -63,20 +70,8 @@ export default function Solutions() {
           <CardSolutions />
         </motion.div>
 
-        <div className="w-[90vw] sm:w-[85vw] md:w-[80vw] py-12 sm:py-16 md:py-20 bg-slate-800 -mt-72 sm:-mt-20 md:-mt-72 relative flex flex-col justify-center items-center rounded-lg">
-          <div className="px-4 sm:px-6 md:px-8 text-center">
-            <h2 className="font-medium text-2xl sm:text-3xl md:text-[34px] mb-4">Shape the Future with Us</h2>
-            <div className="flex flex-col w-full justify-center items-center gap-6 sm:gap-8 md:gap-[48px]">
-              <p className={`font-normal ${inter.className} text-sm sm:text-base text-[#98959B]`}>
-                Explore Opportunities to Work Together Contact us Today.
-              </p>
-              <ButtonZen className="w-full max-w-[200px] h-[36px] flex font-extralight text-[#E6E1E8] justify-center transition-all ease-in-out duration-300">
-                <Link href="/get-started" className={`font-extralight ${inter.className}`}>
-                  Get in Touch
-                </Link>
-              </ButtonZen>
-            </div>
-          </div>
+        <div className=" -mt-72 sm:-mt-20 md:-mt-96">
+          <LargeCtaCompo heading="Shape the Future with Us" desc="Explore Opportunities to Work Together Contact us Today." butt="Meet the Team"></LargeCtaCompo>
         </div>
 
         <div className="dark relative w-full mt-16 sm:mt-20 md:mt-24 lg:mt-[160px] flex items-end justify-center">

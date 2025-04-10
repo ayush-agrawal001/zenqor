@@ -41,8 +41,8 @@ export function NavBar() {
   return (
     <nav className={`fixed left-0 right-0 top-0 z-50 ${(scrollValue >= 0 && scrollValue <= 0.15 && location === "/") ? ` bg-inherit ` : ` bg-transparent backdrop-blur-md `}`}>
       <div className="mx-auto flex max-w-7xl items-center justify-between p-4">
-        <div className="flex items-center gap-2">
-          <Image src="/zenqor.svg" alt="Zenqor Logo" width={40} height={40} />
+        <div className="flex gap-2">
+          <Image src="/zenqor.svg" alt="Zenqor Logo" width={44} height={44} />
           <Link href={"/"}>
             <div className="flex flex-col items-center gap-0">
               <span className="text-[19.2px] font-semibold text-[#FDF7FF] p-0 m-0">Z E N Q O R</span>

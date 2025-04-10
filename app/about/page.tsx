@@ -28,16 +28,24 @@ export default function About() {
     <>
         <div className="flex flex-col items-center h-full w-full pt-32 md:pt-48 lg:pt-64">
             <HeadingAndDesc heading={<Heading />} desc={<Desc />} className=""/>
-            
-            <div className="w-[90vw] sm:w-[85vw] md:w-[75vw] h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-screen overflow-hidden relative mt-[60px] sm:mt-[80px] md:mt-[120px] motion-translate-x-in-[0%] motion-translate-y-in-[80%] motion-delay-[50ms]">
-                      <Image
-                        src="/aboutUs2.png"
-                        className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-all duration-300 aspect-[16/9]"
-                        fill
-                        priority
-                        alt="tech"
-                      />
+
+            <div className="w-[80vw] h-[40vh] md:h-screen relative hover:opacity-100 mt-20">
+                <div className="relative w-full h-full aspect-[16/9] group overflow-visible motion-translate-x-in-[0%] motion-translate-y-in-[82%] motion-delay-0">
+                        <Image
+                            src="/aboutUs2.png"
+                            alt="Hover Background"
+                            fill
+                            className="relative blur-3xl -z-20 shadow-2xl scale-110 object-cover transition-all duration-300 opacity-0 group-hover:opacity-100"
+                        />
+                        <Image
+                            src="/aboutUs2.png"
+                            className="w-full h-full z-0 object-cover opacity-50 group-hover:opacity-100 inset-0 transition-all duration-300 aspect-[16/9]"
+                            fill
+                            priority
+                            alt="tech"
+                        />
                     </div>
+            </div>
             
             <div className="">
                 <motion.div 
@@ -64,7 +72,7 @@ export default function About() {
                 <ScrollTextAboutUs type="solution"></ScrollTextAboutUs>
             </div>
             
-            <LargeCtaCompo></LargeCtaCompo>
+            <LargeCtaCompo heading="Join us on our Journey for the Future" desc="Get to know the People Turning Zenqor&apos;s Vision into Reality." butt="Meet the Team"></LargeCtaCompo>
             
             <div className="dark w-full mt-16 md:mt-24 lg:mt-32 flex items-end justify-center">
                 <Footer></Footer>

@@ -7,7 +7,7 @@ const Copyright: React.FC = () => {
       <div className="flex flex-wrap gap-4 justify-center items-center mt-6 w-full">
         <div className="w-full flex justify-center text-xs sm:text-sm">
           <div className="flex flex-wrap justify-center">
-            <span>© 2025 Zenqor - All Rights Reserved | Privacy and Policy.</span>
+            <span>© 2025 Zenqor is a business brand of Zenqor Labs Pvt Ltd. - All Rights Reserved  |  Privacy and Policy. </span>
           </div>
         </div>
       </div>

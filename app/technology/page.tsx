@@ -2,13 +2,12 @@
 
 import Footer from "@/components/footer"
 import HoverVideoPlayer from "@/components/hoverPlayYt"
+import LargeCtaCompo from "@/components/LargeCtaCompo"
 import ScrollTextAboutUs from "@/components/scrollTextAboutUs"
-import ButtonZen from "@/components/style/buttonZen"
 import HeadingAndDesc from "@/components/style/headingAndDesc"
 import { motion, useScroll, useTransform } from "motion/react"
 import { Inter } from "next/font/google"
 import Image from "next/image"
-import Link from "next/link"
 import { useRef } from "react"
 // import * as animationData from "../../public/Animation.json"
 
@@ -29,15 +28,23 @@ const { scrollYProgress } = useScroll({
     <>
       <div className="flex flex-col items-center top-[120px] sm:top-[180px] md:top-[256px] relative w-full h-full">
         <HeadingAndDesc heading={<Heading />} desc={<Desc />} className="" />
-        <div className="w-[90vw] sm:w-[85vw] md:w-[75vw] h-[30vh] sm:h-[35vh] md:h-[40vh] lg:h-screen overflow-hidden relative mt-[60px] sm:mt-[80px] md:mt-[120px] motion-translate-x-in-[0%] motion-translate-y-in-[80%] motion-delay-[50ms]">
-          <Image
-            src="/technology.png"
-            className="w-full h-full object-cover opacity-50 hover:opacity-100 transition-all duration-300 aspect-[16/9]"
-            fill
-            priority
-            alt="tech"
-          />
-        </div>
+        <div className="w-[80vw] h-[40vh] md:h-screen relative hover:opacity-100 mt-20">
+                        <div className="relative w-full h-full aspect-[16/9] group overflow-visible motion-translate-x-in-[0%] motion-translate-y-in-[82%] motion-delay-0">
+                                <Image
+                                    src="/technology.png"
+                                    alt="Hover Background"
+                                    fill
+                                    className="relative blur-3xl -z-20 shadow-2xl scale-110 object-cover transition-all duration-300 opacity-0 group-hover:opacity-100"
+                                />
+                                <Image
+                                    src="/technology.png"
+                                    className="w-full h-full z-0 object-cover opacity-50 group-hover:opacity-100 inset-0 transition-all duration-300 aspect-[16/9]"
+                                    fill
+                                    priority
+                                    alt="tech"
+                                />
+                            </div>
+                    </div>
         <div className="">
           <motion.div
             style={{
@@ -71,39 +78,8 @@ const { scrollYProgress } = useScroll({
           </h1>
           <HoverVideoPlayer></HoverVideoPlayer>
         </div>
-        <div className="w-[90vw] relative sm:w-[85vw] md:w-[80vw] h-auto py-12 sm:h-[320px] bg-slate-800 mt-[80px] sm:mt-[120px] md:mt-[180px] flex justify-center items-center">
-        {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden">
-          <motion.div
-            // style={{
-            //   scale: bgScale,
-            //   opacity: bgOpacity,
-            // }}
-            className="flex justify-center items-center h-full w-full"
-          >
-            <Lottie
-              rendererSettings={{ preserveAspectRatio: "xMidYMid slice" }}
-              className="w-screen h-screen top-0 opacity-100"
-              loop
-              autoplay
-              animationData={animationData}
-            />
-          </motion.div>
-        </div> */}
-          <div className="px-6 sm:px-0">
-            <h2 className="font-medium text-[24px] sm:text-[28px] md:text-[34px] text-center">
-              Shape the Future with Us
-            </h2>
-            <div className="flex flex-col w-full justify-center mt-[16px] items-center gap-[24px] sm:gap-[48px]">
-              <p className={`font-normal ${inter.className} text-[14px] sm:text-[16px] text-[#98959B] text-center`}>
-                Explore Opportunities to Work Together Contact us Today.
-              </p>
-              <ButtonZen className="w-[137px] h-[36px] flex font-extralight text-[#E6E1E8] justify-center transition-all ease-in-out duration-300">
-                <Link href="/get-started" className={`font-extralight ${inter.className}`}>
-                  Meet the Team
-                </Link>
-              </ButtonZen>
-            </div>
-          </div>
+        <div className="mt-20">
+          <LargeCtaCompo heading="Shape the Future with Us" desc="Explore Opportunities to Work Together Contact us Today." butt="Meet the Team"></LargeCtaCompo>
         </div>
         <div className="dark w-full mt-[80px] sm:mt-[120px] md:mt-[160px] flex items-end justify-center">
           <Footer></Footer>

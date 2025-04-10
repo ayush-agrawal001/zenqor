@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const inter = Inter({ subsets: ["latin"] })
 
-const LargeCtaCompo = () => { 
+const LargeCtaCompo = ({heading, desc, butt} : {heading : string, desc : string, butt : string}) => {
     return (
         <div className=" relative w-[90vw] z-10 md:w-[85vw] lg:w-[80vw] lg:h-[320px] py-12 md:py-16 lg:py-24 bg-transparent mt-16 md:mt-24 lg:mt-32 flex justify-center items-center gap-[48px] rounded-lg overflow-hidden">
                 <video
@@ -33,15 +33,15 @@ const LargeCtaCompo = () => {
 
                 <div className="px-4 md:px-8 text-center relative z-10">
                     <h2 className="font-semibold text-xl md:text-2xl lg:text-[33.18px]">
-                        Join us on our Journey for the Future
+                        {heading}
                     </h2>
                     <div className="flex flex-col w-full justify-center mt-4 md:mt-6 items-center gap-6 md:gap-8">
                         <p className={`font-normal ${inter.className} text-sm md:text-base text-[#98959B]`}>
-                            Get to know the People Turning Zenqor&apos;s Vision into Reality.
+                            {desc}
                         </p>
                         <ButtonZen className="w-[137px] h-[36px] md:h-[42px] font-extralight text-[#E6E1E8] justify-center transition-all ease-in-out duration-300"> 
                             <Link href="/get-started" className={`font-extralight ${inter.className}`}>
-                                Meet the Team
+                                {butt}
                             </Link>
                         </ButtonZen>
                     </div>
